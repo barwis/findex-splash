@@ -61,35 +61,56 @@ window.SignupForm.prototype = {
 			c4x = this.size.width * .8,
 			c4y = this.size.height * .863,
 			c4r = this.size.width * .115,
+			c5x = c1x,
+			c5y = c1y, 
+			c5r = c1r - 10,
 			circles = [
-				this.snap.circle(c0x, c0y, 0),
-				this.snap.circle(c1x, c1y, 0),
-				this.snap.circle(c2x, c2y + c2r, 0),
-				this.snap.circle(c3x, c3y, 0),
-				this.snap.circle(c4x, c4y, 0)
-			];
+				this.snap.circle(c0x, c0y, 0).attr('id', 'circle0'), 																//0
+				this.snap.circle(c2x, c2y + c2r, 0).attr('id', 'circle2'),															//1
+				this.snap.circle(c1x, c1y, 0).attr({'fill': '#ed5153', 'id': 'circle1', 'stroke': '#ffffff', 'stroke-width' : 20}), //2
+				this.snap.circle(c3x, c3y, 0).attr('id', 'circle3'),																//3
+				this.snap.circle(c4x, c4y, 0).attr('id', 'circle4')																	//4
+			],
+			mask = this.snap.circle(c1x, c1y, 0),
+			maskG = this.snap.group(mask),
+			image = this.snap.image('/images/pop_img.png'),
+			imageWidth = 564,
+			scale = imageWidth / c1r /5,
 
-		var t = new Snap.Matrix();
-		t.translate(this.originalSize.width * this.padding, this.originalSize.height * this.padding);
+			imageGroup = this.snap.group(image).attr({mask: maskG});//
 
-		this.maskGroup = this.snap.group(circles[0], circles[1], circles[2], circles[3], circles[4]).transform(t).attr('id', 'myGroup').attr('filter', 'url(#dropshadow)');
+			image.transform(new Snap.Matrix().scale(scale, scale));
+
+
+				// this.snap.circle(c5x, c5y, 0).attr({'fill': '#ed5153', 'id': 'circle5'})
+
+		// var t = new Snap.Matrix().translate(this.originalSize.width * this.padding, this.originalSize.height * this.padding);
+
+		this.maskGroup = this
+							.snap
+							.group(circles[0], circles[1], circles[2], circles[3], circles[4], imageGroup)
+							.transform(new Snap.Matrix().translate(this.originalSize.width * this.padding, this.originalSize.height * this.padding))
+							.attr('id', 'myGroup')
+							.attr('filter', 'url(#dropshadow)');
+
+
+		mask.animate({
+			r: c1r
+		}, 2000, mina.backout);
 
 		var animations = [
 			{r: c0r},
-			{r: c1r, cx: c1x, cy: c1y},
 			{r: c2r, cy: c2y},
+			{r: c1r, cx: c1x, cy: c1y},
 			{r: c3r, cy: c3y},
-			{r: c4r}
-
+			{r: c4r},
+			// {r: c5r}
 		];
 
 		for (var i = 0; i < animations.length; i++) {
 			(function(index) {
 				var c = i;
-				console.log(animations[c]);
-				console.log(circles[c]);
 				window.setTimeout(function() {
-					console.log('fire animation', c)
 					circles[c].animate(animations[c], 250, mina.backout);
 				}, c * 150);
 			})(i);
