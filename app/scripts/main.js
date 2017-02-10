@@ -72,7 +72,7 @@ window.SignupForm.prototype = {
 		var t = new Snap.Matrix();
 		t.translate(this.originalSize.width * this.padding, this.originalSize.height * this.padding);
 
-		this.maskGroup = this.snap.group(circles[0], circles[1], circles[2], circles[3], circles[4]).transform(t).attr('id', 'myGroup');
+		this.maskGroup = this.snap.group(circles[0], circles[1], circles[2], circles[3], circles[4]).transform(t).attr('id', 'myGroup').attr('filter', 'url(#dropshadow)');
 
 		var animations = [
 			{r: c0r},
