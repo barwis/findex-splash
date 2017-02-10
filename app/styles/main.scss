@@ -426,11 +426,14 @@ footer {
     .signup_form {
         display: block;
         position: absolute;
-        width: 1000px;
-        height: 949px;
+        width: 100%:
+        max-width: 900px;
+        height: 100%:
+        max-height: 549px;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        outline: 1px solid white;
     }
 
     svg {
