@@ -128,8 +128,14 @@ window.SignupForm.prototype = {
 
 };
 
+$('button').click(function() {
+	$('.overlay').fadeIn(700, function() {
+		var signupForm = new SignupForm('bubbles', 'signup_form');
+		signupForm.init();
+		signupForm.createMask();
+	});
+});
+
 (function(){
-	var signupForm = new SignupForm('bubbles', 'signup_form');
-	signupForm.init();
-	signupForm.createMask();
+	
 })();
