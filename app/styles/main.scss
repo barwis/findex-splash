@@ -1,0 +1,449 @@
+// colors
+$colors: (
+    white:    #ffffff,
+    blue:     rgba(0, 174, 239, 0.8),
+    lightBlue:  #b4d0e8,
+    darkBlue: #2268a5,
+    grey:     #d9d4d2,
+    darkGrey: #14170d
+);
+
+$blue: rgba(0, 174, 239, 0.8);
+
+
+$grey: #d9d4d2;
+$dark-grey: #14170d;
+
+$mobile-width: 640px;
+$tablet-width: 768px;
+$wide-width: 1024px;
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin tablet {
+        @media (min-width: #{$mobile-width + 1}) {
+                @content;
+        }
+}
+
+@mixin desktop {
+        @media (min-width: #{$wide-width}) {
+                @content;
+        }
+}
+
+
+@mixin tablet {
+        @media (min-width: #{$tablet-width}) {
+                @content;
+        }
+}
+
+@mixin landscape {
+    @media (orientation: landscape) {
+        @content;
+    }
+}
+
+@mixin portrait {
+    @media (orientation: portrait) {
+        @content;
+    }
+}
+
+
+
+@mixin mobile-wide {
+    @media (min-device-width: 540px) {
+        @content;
+    }
+}
+
+@mixin mobile-device {
+        @media (max-device-width: $mobile-width) {
+                @content;
+        }
+}
+
+@mixin tablet-device {
+        @media (min-device-width: $mobile-width + 1) and (max-device-width: $tablet-width) {
+                @content;
+        }
+}
+
+@mixin desktop-device {
+        @media (min-device-width: $tablet-width + 1) {
+                @content;
+        }
+}
+
+@mixin modern-iphone-landscape {
+        @media (min-device-width: 375px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+                @content;
+        }
+}
+
+@mixin prefix($declarations) {
+  @each $property, $value in $declarations {
+      #{'-webkit-' + $property}: $value;
+      #{'-moz-' + $property}: $value;
+      #{'-ms-' + $property}: $value;
+
+    // Output standard non-prefixed declaration
+    #{$property}: $value;
+  }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-size:.3em;
+
+    @include tablet {
+        font-size: .5em;
+    }
+}
+
+body {
+    background: url(/images/splash_bg.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: white;
+}
+
+.hero {
+    
+    box-sizing: border-box;
+    width: 100%;
+    height:100%;
+
+    @include landscape {
+        padding: 5%;
+    }
+
+    @include portrait {
+        padding: 25% 15%;
+    }
+
+    @include tablet {
+
+        @include portrait {
+            padding: 30% 15%;
+        }
+
+        @include landscape {
+            padding: 15%;
+        }
+    }
+
+    @include desktop {
+        padding: 10%;
+        min-height:700px;
+    }
+
+    @at-root #{&}__container {
+
+        display: -webkit-flex;
+        display: -moz-flex; 
+        display: flex;
+
+        @include prefix((
+            flex-direction: column,
+            flex-wrap: wrap,
+            justify-content: space-between,
+            align-content: space-between,
+            flex-flow: col wrap
+        ));
+
+        box-sizing: border-box;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        height: 100vmax;
+        padding-bottom:20%;
+        height: 100%;
+
+
+        @include mobile-wide {
+            padding-bottom:0%;
+        }
+    }
+
+    @at-root #{&}__logo {
+        width: 30vmin;
+        max-width: 300px;
+        height: 30vmin;
+        max-height: 300px;
+        display: block;
+        position: relative;
+        margin: 0 auto 5vmax;
+        font-size: 0;
+        overflow: hidden;
+        background-position: center center;
+        background-size: 100% auto;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 150px;
+        text-align: center;
+        text-align: center;
+        clip-path: inset(0 0 0 0 round 500px);
+
+        &:before, &:after {
+            display: block;
+            position: absolute;
+        }
+
+        &:before {
+            content: '';
+            background: url(/images/splash_bg.jpg);
+            font-size: 0;
+            color: white;
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            width: 200%;
+            margin-left: -50%;
+            margin-top:-50%;
+            height: 200%;
+            filter: blur(10px);
+        }
+
+        &:after {
+            content: url(/images/logo.svg);
+            width: 100%;
+            height: 100%;
+            background: map-get($colors, blue);//$blue;
+            left: 0;
+            top:0;
+            bottom:0;
+            right:0;
+        }
+    }
+
+    @at-root #{&}__about {
+        color: white;
+        left: 36px;
+        top:44px;
+        text-align: left;
+        font-size: 2.25rem;
+
+        @include tablet {
+            position: absolute;
+            text-align: left;
+        }
+
+        span {
+            font-weight: 700;
+            font-style: italic;
+        }
+    }
+
+    @at-root #{&}__tagline {
+        font-size: 3rem;
+        font-weight: 300;
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+        bottom: 26%;
+        left:0;
+
+        @include tablet {
+            font-size: 6.25rem;
+        }
+
+        span {
+            font-weight: 700;
+            font-style: italic;
+        }
+
+    }
+
+    @at-root #{&}__signup {
+        background: none;
+        border: 2px solid white;
+        border-radius: 50px;
+        font-weight: 400;
+        color: white;
+        padding: 0 25px;
+        font-size: 2.125rem;
+        line-height: 3.125;
+        display:inline-block;
+        transition: all .3s ease-out;
+        align-self: flex-end;
+
+        @include prefix((
+            flex: 0 0 auto
+        ));
+
+        &:hover {
+            background: $grey;
+            color: $dark-grey;
+            cursor: pointer;
+        }
+    }
+}
+
+
+footer {
+    padding: 25px 6%;
+    width: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    background: map-get($colors, darkBlue);
+    position: relative;
+    color: white;
+    font-weight: 400;
+    font-size: 1.875rem;
+    margin-top: -13px;
+
+    img {
+        height: 1.5rem;
+        display:inline-block;
+        vertical-align: text-top;
+    }
+
+    .container {
+        @include clearfix;
+    }
+
+    
+    @include mobile-wide {
+        padding: 30px 16%;
+    }
+
+
+    .scroll {
+        background-image: url('data:image/gif;base64,R0lGODlhGgAPAKIHAPDw8fn5+vz8/Pr6+/j4+fDw8u/v8f///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMwNjcgNzkuMTU3NzQ3LCAyMDE1LzAzLzMwLTIzOjQwOjQyICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNSAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2NjU2RTIzRUU2RjYxMUU2ODYxOUIwN0FDMURGQTFDMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo2NjU2RTIzRkU2RjYxMUU2ODYxOUIwN0FDMURGQTFDMSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjY2NTZFMjNDRTZGNjExRTY4NjE5QjA3QUMxREZBMUMxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjY2NTZFMjNERTZGNjExRTY4NjE5QjA3QUMxREZBMUMxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAABwAsAAAAABoADwAAA1NIFdf+EIaijGExv2DLsJemcdZwfBYmOqRhNqhBrA0Bvs4AWLNoGwDcY1DgaX4eEdEIQQozgqLsgRTQGlFm9erIyrbcrrRjDT+8hbL5XEivoWpRAgA7');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 50%;
+        width: 35px;
+        height: 35px;
+        display: block;
+        background-color: map-get($colors, darkBlue);
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -13px;
+        margin-top: -23px;
+        border-radius: 50px;
+        box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    .social, .contact {
+            margin:40px 0 20px;
+            float: left;
+
+        ul {
+            font-family: "socicon" !important;
+            margin: 20px 0;
+            vertical-align :middle;
+            padding:0;
+            clear: both;
+
+            li {
+                list-style: none;
+                margin: 0 10px 10px 0;
+                padding: 0;
+                display: inline-block;
+
+                a {
+                    font-size: 1.5em;
+                    display: block;
+                    color: map-get($colors, lightBlue);
+                    text-decoration: none;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 40px;
+                    border: 1px solid map-get($colors, lightBlue);
+                    line-height: 40px;
+                    text-align: center;
+                    transition: all 0.3s ease-out;
+
+                    &:hover {
+                        background: map-get($colors, lightBlue);;
+                        color: map-get($colors, darkBlue);
+                    }
+                }
+            }
+        }
+    }
+
+    .contact {
+        float: right;
+
+        ul {
+            text-align: center;
+
+            li {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .copyright {
+        width: 100%;
+        border-top: 1px solid map-get($colors, lightBlue);
+        opacity: 0.5;
+        font-size: 1.5rem;
+        line-height: 1.3;  
+        padding: 15px 0;
+        clear: both;
+    }
+}
+
+
+
+.overlay {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top:0;
+    opacity: 0;
+    background: map-get($colors, blue);
+    // animation: fadeIn .3s ease-in;
+
+    .signup_form {
+        display: block;
+        position: absolute;
+        width: 1000px;
+        height: 949px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    svg {
+        fill: #ffffff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+
+@keyframes fadeIn {
+    0% { opacity: 0;}
+    100% { opacity: 100%;}
+}
